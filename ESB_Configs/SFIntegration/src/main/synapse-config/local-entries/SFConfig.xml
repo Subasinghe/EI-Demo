@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="SFConfig" xmlns="http://ws.apache.org/ns/synapse">
+    <salesforce.init xmlns="">
+        <username>tech@techforce.com</username>
+        <password>eidemo17@hjmVExRnQhcCD1eLmb27NZ1wp</password>
+        <loginUrl>https://login.salesforce.com/services/Soap/u/40.0</loginUrl>
+        <blocking>false</blocking>
+    </salesforce.init>
+</localEntry>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/account" name="SFAccountAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" url-mapping="/create">
+        <inSequence>
+            <payloadFactory description="" media-type="xml">
+                <format>
+                    <sfdc:sobjects type="Account" xmlns:sfdc="sfdc">
+                        <sfdc:sobject>
+                            <sfdc:AccountName>$1</sfdc:AccountName>
+                            <sfdc:AccountNumber>$2</sfdc:AccountNumber>
+                            <sfdc:AccountOwnerAlias>$3</sfdc:AccountOwnerAlias>
+                            <sfdc:Industry>$4</sfdc:Industry>
+                            <sfdc:NumberOfEmployees>$5</sfdc:NumberOfEmployees>
+                            <sfdc:Phone>$6</sfdc:Phone>
+                        </sfdc:sobject>
+                    </sfdc:sobjects>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="//AccountName"/>
+                    <arg evaluator="xml" expression="//AccountNumber"/>
+                    <arg evaluator="xml" expression="//AccountOwnerAlias"/>
+                    <arg evaluator="xml" expression="//Industry"/>
+                    <arg evaluator="xml" expression="//NumberOfEmployees"/>
+                    <arg evaluator="xml" expression="//Phone"/>
+                </args>
+            </payloadFactory>
+            <salesforce.create configKey="SFConfig">
+                <allOrNone>0</allOrNone>
+                <allowFieldTruncate>0</allowFieldTruncate>
+                <sobjects xmlns:sfdc="sfdc">{//sfdc:sObjects}</sobjects>
+            </salesforce.create>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="SFAccountAPI" groupId="com.example.SFIntegration.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/SFAccountAPI.xml</file>
+    </artifact>
+    <artifact name="SFConfig" groupId="com.example.SFIntegration.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/SFConfig.xml</file>
+    </artifact>
+</artifacts>

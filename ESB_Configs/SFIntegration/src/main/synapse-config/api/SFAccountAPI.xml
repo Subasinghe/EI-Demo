@@ -6,19 +6,17 @@
                 <format>
                     <sfdc:sobjects type="Account" xmlns:sfdc="sfdc">
                         <sfdc:sobject>
-                            <sfdc:AccountName>$1</sfdc:AccountName>
+                            <sfdc:Name>$1</sfdc:Name>
                             <sfdc:AccountNumber>$2</sfdc:AccountNumber>
-                            <sfdc:AccountOwnerAlias>$3</sfdc:AccountOwnerAlias>
-                            <sfdc:Industry>$4</sfdc:Industry>
-                            <sfdc:NumberOfEmployees>$5</sfdc:NumberOfEmployees>
-                            <sfdc:Phone>$6</sfdc:Phone>
+                            <sfdc:Industry>$3</sfdc:Industry>
+                            <sfdc:NumberOfEmployees>$4</sfdc:NumberOfEmployees>
+                            <sfdc:Phone>$5</sfdc:Phone>
                         </sfdc:sobject>
                     </sfdc:sobjects>
                 </format>
                 <args>
                     <arg evaluator="xml" expression="//AccountName"/>
                     <arg evaluator="xml" expression="//AccountNumber"/>
-                    <arg evaluator="xml" expression="//AccountOwnerAlias"/>
                     <arg evaluator="xml" expression="//Industry"/>
                     <arg evaluator="xml" expression="//NumberOfEmployees"/>
                     <arg evaluator="xml" expression="//Phone"/>
@@ -27,8 +25,56 @@
             <salesforce.create configKey="SFConfig">
                 <allOrNone>0</allOrNone>
                 <allowFieldTruncate>0</allowFieldTruncate>
-                <sobjects xmlns:sfdc="sfdc">{//sfdc:sObjects}</sobjects>
+                <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
             </salesforce.create>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/update">
+        <inSequence>
+            <payloadFactory description="" media-type="xml">
+                <format>
+                    <sfdc:sobjects type="Account" xmlns:sfdc="sfdc">
+                        <sfdc:sobject>
+                            <sfdc:Id>$1</sfdc:Id>
+                            <sfdc:NumberOfEmployees>$2</sfdc:NumberOfEmployees>
+                        </sfdc:sobject>
+                    </sfdc:sobjects>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="//SFId"/>
+                    <arg evaluator="xml" expression="//NumberOfEmployees"/>
+                </args>
+            </payloadFactory>
+            <salesforce.update configKey="SFConfig">
+                <allOrNone>0</allOrNone>
+                <allowFieldTruncate>0</allowFieldTruncate>
+                <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
+            </salesforce.update>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/delete">
+        <inSequence>
+            <payloadFactory description="" media-type="xml">
+                <format>
+                    <sfdc:sobjects xmlns:sfdc="sfdc">
+                        <sfdc:Ids>$1</sfdc:Ids>
+                    </sfdc:sobjects>
+                </format>
+                <args>
+                    <arg evaluator="xml" expression="//SFId"/>
+                </args>
+            </payloadFactory>
+            <salesforce.delete configKey="SFConfig">
+                <allOrNone>0</allOrNone>
+                <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
+            </salesforce.delete>
+            <respond/>
         </inSequence>
         <outSequence/>
         <faultSequence/>

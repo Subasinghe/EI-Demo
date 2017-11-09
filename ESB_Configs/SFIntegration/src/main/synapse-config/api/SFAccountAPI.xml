@@ -32,48 +32,35 @@
         <outSequence/>
         <faultSequence/>
     </resource>
-    <resource methods="POST" url-mapping="/update">
+    <resource methods="POST" url-mapping="/addExpiredAccounts">
         <inSequence>
             <payloadFactory description="" media-type="xml">
                 <format>
-                    <sfdc:sobjects type="Account" xmlns:sfdc="sfdc">
+                    <sfdc:sobjects type="expiredaccounts__x" xmlns:sfdc="sfdc">
                         <sfdc:sobject>
-                            <sfdc:Id>$1</sfdc:Id>
-                            <sfdc:NumberOfEmployees>$2</sfdc:NumberOfEmployees>
+                            <sfdc:account_name__c>$1</sfdc:account_name__c>
+                            <sfdc:account_number__c>$2</sfdc:account_number__c>
+                            <sfdc:expired_date__c>$3</sfdc:expired_date__c>
+                            <sfdc:id__c>$4</sfdc:id__c>
+                            <sfdc:industry__c>$5</sfdc:industry__c>
+                            <sfdc:phone__c>$6</sfdc:phone__c>
                         </sfdc:sobject>
                     </sfdc:sobjects>
                 </format>
                 <args>
-                    <arg evaluator="xml" expression="//SFId"/>
-                    <arg evaluator="xml" expression="//NumberOfEmployees"/>
+                    <arg evaluator="xml" expression="//AccountName"/>
+                    <arg evaluator="xml" expression="//AccountNumber"/>
+                    <arg evaluator="xml" expression="//ExpiredDate"/>
+                    <arg evaluator="xml" expression="//Id"/>
+                    <arg evaluator="xml" expression="//Industry"/>
+                    <arg evaluator="xml" expression="//Phone"/>
                 </args>
             </payloadFactory>
-            <salesforce.update configKey="SFConfig">
+            <salesforce.create configKey="SFConfig">
                 <allOrNone>0</allOrNone>
                 <allowFieldTruncate>0</allowFieldTruncate>
                 <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
-            </salesforce.update>
-            <respond/>
-        </inSequence>
-        <outSequence/>
-        <faultSequence/>
-    </resource>
-    <resource methods="POST" url-mapping="/delete">
-        <inSequence>
-            <payloadFactory description="" media-type="xml">
-                <format>
-                    <sfdc:sobjects xmlns:sfdc="sfdc">
-                        <sfdc:Ids>$1</sfdc:Ids>
-                    </sfdc:sobjects>
-                </format>
-                <args>
-                    <arg evaluator="xml" expression="//SFId"/>
-                </args>
-            </payloadFactory>
-            <salesforce.delete configKey="SFConfig">
-                <allOrNone>0</allOrNone>
-                <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
-            </salesforce.delete>
+            </salesforce.create>
             <respond/>
         </inSequence>
         <outSequence/>

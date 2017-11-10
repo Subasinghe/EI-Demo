@@ -11,6 +11,9 @@
                             <sfdc:Industry>$3</sfdc:Industry>
                             <sfdc:NumberOfEmployees>$4</sfdc:NumberOfEmployees>
                             <sfdc:Phone>$5</sfdc:Phone>
+                            <sfdc:DateCreated__c>$6</sfdc:DateCreated__c>
+                            <sfdc:ValidPeriod__c>$7</sfdc:ValidPeriod__c>
+                            <sfdc:DateExpired__c>$8</sfdc:DateExpired__c>
                         </sfdc:sobject>
                     </sfdc:sobjects>
                 </format>
@@ -20,6 +23,9 @@
                     <arg evaluator="xml" expression="//Industry"/>
                     <arg evaluator="xml" expression="//NumberOfEmployees"/>
                     <arg evaluator="xml" expression="//Phone"/>
+                    <arg evaluator="xml" expression="//CreatedDate"/>
+                    <arg evaluator="xml" expression="//ValidPeriod"/>
+                    <arg evaluator="xml" expression="//ExpiredDate"/>
                 </args>
             </payloadFactory>
             <salesforce.create configKey="SFConfig">
@@ -34,33 +40,65 @@
     </resource>
     <resource methods="POST" url-mapping="/addExpiredAccounts">
         <inSequence>
-            <payloadFactory description="" media-type="xml">
-                <format>
-                    <sfdc:sobjects type="expiredaccounts__x" xmlns:sfdc="sfdc">
-                        <sfdc:sobject>
-                            <sfdc:account_name__c>$1</sfdc:account_name__c>
-                            <sfdc:account_number__c>$2</sfdc:account_number__c>
-                            <sfdc:expired_date__c>$3</sfdc:expired_date__c>
-                            <sfdc:id__c>$4</sfdc:id__c>
-                            <sfdc:industry__c>$5</sfdc:industry__c>
-                            <sfdc:phone__c>$6</sfdc:phone__c>
-                        </sfdc:sobject>
-                    </sfdc:sobjects>
-                </format>
-                <args>
-                    <arg evaluator="xml" expression="//AccountName"/>
-                    <arg evaluator="xml" expression="//AccountNumber"/>
-                    <arg evaluator="xml" expression="//ExpiredDate"/>
-                    <arg evaluator="xml" expression="//Id"/>
-                    <arg evaluator="xml" expression="//Industry"/>
-                    <arg evaluator="xml" expression="//Phone"/>
-                </args>
-            </payloadFactory>
-            <salesforce.create configKey="SFConfig">
-                <allOrNone>0</allOrNone>
-                <allowFieldTruncate>0</allowFieldTruncate>
-                <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
-            </salesforce.create>
+            <property expression="get-property('SYSTEM_DATE', 'yyyy-MM-dd')" name="CurrentDate" scope="default" type="STRING"/>
+            <property expression="fn:concat(&quot;select Id,Name,AccountNumber,Industry,Phone,DateExpired__c from Account WHERE DateExpired__c &lt; &quot;,get-property('CurrentDate'))" name="queryString" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
+            <salesforce.query configKey="SFConfig">
+                <batchSize>200</batchSize>
+                <queryString xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">{$ctx:queryString}</queryString>
+            </salesforce.query>
+            <iterate continueParent="true" expression="//ns:records" id="msgIterator" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com">
+                <target>
+                    <sequence>
+                        <property expression="//ns:records/urn:Id[1]/text()" name="salesforce.account.id" scope="default" type="STRING"/>
+                        <property expression="//ns:records/urn:Name[1]/text()" name="salesforce.account.name" scope="default" type="STRING"/>
+                        <property expression="//ns:records/urn:AccountNumber[1]/text()" name="salesforce.account.number" scope="default" type="STRING"/>
+                        <property expression="//ns:records/urn:Industry[1]/text()" name="salesforce.account.industry" scope="default" type="STRING"/>
+                        <property expression="//ns:records/urn:Phone[1]/text()" name="salesforce.account.phone" scope="default" type="STRING"/>
+                        <property expression="//ns:records/urn:DateExpired__c[1]/text()" name="salesforce.account.expiredDate" scope="default" type="STRING"/>
+                        <payloadFactory description="" media-type="xml">
+                            <format>
+                                <sfdc:sobjects xmlns:sfdc="sfdc">
+                                    <sfdc:Ids>$ctx:salesforce.account.id</sfdc:Ids>
+                                </sfdc:sobjects>
+                            </format>
+                            <args/>
+                        </payloadFactory>
+                        <payloadFactory description="" media-type="xml">
+                            <format>
+                                <sfdc:sobjects xmlns:sfdc="sfdc">
+                                    <sfdc:Ids>$ctx:salesforce.account.id</sfdc:Ids>
+                                </sfdc:sobjects>
+                            </format>
+                            <args/>
+                        </payloadFactory>
+                        <salesforce.delete configKey="SFConfig">
+                            <allOrNone>0</allOrNone>
+                            <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
+                        </salesforce.delete>
+                        <property expression="fn:substring-after(get-property('MessageID'), 'urn:uuid:')" name="UUID" scope="default" type="STRING"/>
+                        <payloadFactory description="" media-type="xml">
+                            <format>
+                                <sfdc:sobjects type="expiredaccounts__x" xmlns:sfdc="sfdc">
+                                    <sfdc:sobject>
+                                        <sfdc:account_name__c>$ctx:salesforce.account.name</sfdc:account_name__c>
+                                        <sfdc:account_number__c>$ctx:salesforce.account.number</sfdc:account_number__c>
+                                        <sfdc:expired_date__c>$ctx:salesforce.account.expiredDate</sfdc:expired_date__c>
+                                        <sfdc:id__c>$ctx:UUID</sfdc:id__c>
+                                        <sfdc:industry__c>$ctx:salesforce.account.industry</sfdc:industry__c>
+                                        <sfdc:phone__c>$ctx:salesforce.account.phone</sfdc:phone__c>
+                                    </sfdc:sobject>
+                                </sfdc:sobjects>
+                            </format>
+                            <args/>
+                        </payloadFactory>
+                        <salesforce.create configKey="SFConfig">
+                            <allOrNone>0</allOrNone>
+                            <allowFieldTruncate>0</allowFieldTruncate>
+                            <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
+                        </salesforce.create>
+                    </sequence>
+                </target>
+            </iterate>
             <respond/>
         </inSequence>
         <outSequence/>

@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="opportunityProcess" name="Opportunity process" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <userTask id="usertask1" name="Start Task" activiti:assignee="admin">
+      <extensionElements>
+        <activiti:formProperty id="opportunityId" name="Opportunity ID" type="string" default="${opportunityId}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityName" name="Opportunity Name" type="string" default="${opportunityName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityAmount" name="Amount" type="string" default="${opportunityAmount}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityClosedate" name="Close Date" type="string" default="${opportunityClosedate}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="accountName" name="Account" type="string" default="${accountName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="type" name="Account Type" type="string" default="${type}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="stage" name="Opportunity Stage" type="string" default="${stage}" writable="false" required="true"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="usertask1"></sequenceFlow>
+    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+    <userTask id="usertask2" name="Stage Prospecting Task" activiti:assignee="presalesstaff">
+      <extensionElements>
+        <activiti:formProperty id="opportunityId" name="Opportunity ID" type="string" default="${opportunityId}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityName" name="Opportunity Name" type="string" default="${opportunityName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityAmount" name="Amount" type="string" default="${opportunityAmount}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityClosedate" name="Close Date" type="string" default="${opportunityClosedate}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="accountName" name="Account" type="string" default="${accountName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="type" name="Account Type" type="string" default="${type}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="stage" name="Opportunity Stage" type="enum" default="${stage}" required="true">
+          <activiti:value id="Needs Analysis" name="Needs Analysis"></activiti:value>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="usertask8" name="Stage Needs Analysis Task" activiti:assignee="salesstaff">
+      <extensionElements>
+        <activiti:formProperty id="opportunityId" name="Opportunity ID" type="string" default="${opportunityId}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityName" name="Opportunity Name" type="string" default="${opportunityName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityAmount" name="Amount" type="string" default="${opportunityAmount}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityClosedate" name="Close Date" type="string" default="${opportunityClosedate}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="accountName" name="Account" type="string" default="${accountName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="type" name="Account Type" type="string" default="${type}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="stage" name="Opportunity Stage" type="enum" default="${stage}" required="true">
+          <activiti:value id="Value Proposition" name="Value Proposition"></activiti:value>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="usertask9" name="Stage Value Proposition Task" activiti:assignee="salesmanager">
+      <extensionElements>
+        <activiti:formProperty id="opportunityId" name="Opportunity ID" type="string" default="${opportunityId}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityName" name="Opportunity Name" type="string" default="${opportunityName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityAmount" name="Amount" type="string" default="${opportunityAmount}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityClosedate" name="Close Date" type="string" default="${opportunityClosedate}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="accountName" name="Account" type="string" default="${accountName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="type" name="Account Type" type="string" default="${type}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="stage" name="Opportunity Stage" type="enum" default="${stage}" required="true">
+          <activiti:value id="Proposal/Price Quote" name="Proposal/Price Quote"></activiti:value>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="usertask10" name="Stage Proposal/Price Quote Task" activiti:assignee="legalstaff">
+      <extensionElements>
+        <activiti:formProperty id="opportunityId" name="Opportunity ID" type="string" default="${opportunityId}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityName" name="Opportunity Name" type="string" default="${opportunityName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityAmount" name="Amount" type="string" default="${opportunityAmount}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityClosedate" name="Close Date" type="string" default="${opportunityClosedate}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="accountName" name="Account" type="string" default="${accountName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="type" name="Account Type" type="string" default="${type}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="stage" name="Opportunity Stage" type="string" default="Negotiation/Review" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="stage" name="Opportunity Stage" type="enum" default="${stage}" required="true">
+          <activiti:value id="Negotiation/Review" name="Negotiation/Review"></activiti:value>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <userTask id="usertask11" name="Stage Negotiation/Review Task" activiti:assignee="consultant">
+      <extensionElements>
+        <activiti:formProperty id="opportunityId" name="Opportunity ID" type="string" default="${opportunityId}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityName" name="Opportunity Name" type="string" default="${opportunityName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityAmount" name="Amount" type="string" default="${opportunityAmount}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityClosedate" name="Close Date" type="string" default="${opportunityClosedate}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="accountName" name="Account" type="string" default="${accountName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="type" name="Account Type" type="string" default="${type}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="stage" name="Opportunity Stage" type="enum" required="true">
+          <activiti:value id="Closed Won" name="Closed Won"></activiti:value>
+          <activiti:value id="Closed Lost" name="Closed Lost"></activiti:value>
+        </activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="exclusivegateway1"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="exclusivegateway1" targetRef="usertask2">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${stage=="Prospecting"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="exclusivegateway1" targetRef="usertask8">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${stage=="Needs Analysis"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="exclusivegateway1" targetRef="usertask9">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${stage=="Value Proposition"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="exclusivegateway1" targetRef="usertask10">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${stage=="Proposal/Price Quote"}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="exclusivegateway1" targetRef="usertask11">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${stage=="Negotiation/Review"}]]></conditionExpression>
+    </sequenceFlow>
+    <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
+    <sequenceFlow id="flow8" sourceRef="usertask2" targetRef="parallelgateway1"></sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="parallelgateway1" targetRef="usertask8"></sequenceFlow>
+    <serviceTask id="servicetask1" name="REST Task" activiti:class="org.wso2.carbon.bpmn.extensions.rest.RESTTask" activiti:extensionId="org.wso2.developerstudio.bpmn.extensions.restTask.RESTTask">
+      <extensionElements>
+        <activiti:field name="serviceURL">
+          <activiti:string>http://localhost:8280/opportunity/updateStage</activiti:string>
+        </activiti:field>
+        <activiti:field name="method">
+          <activiti:string>POST</activiti:string>
+        </activiti:field>
+        <activiti:field name="input">
+          <activiti:expression>{
+ "id":"${opportunityId}", "stage":"${stage}"
+}</activiti:expression>
+        </activiti:field>
+        <activiti:field name="headers">
+          <activiti:string>{"Accept":"application/json","Content-Type":"application/json"}</activiti:string>
+        </activiti:field>
+        <activiti:field name="outputMappings">
+          <activiti:string>id:updateResponse.result.id,success:updateResponse.result.success</activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow10" sourceRef="parallelgateway1" targetRef="servicetask1"></sequenceFlow>
+    <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow11" sourceRef="servicetask1" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="usertask8" targetRef="parallelgateway2"></sequenceFlow>
+    <sequenceFlow id="flow13" sourceRef="parallelgateway2" targetRef="usertask9"></sequenceFlow>
+    <parallelGateway id="parallelgateway3" name="Parallel Gateway"></parallelGateway>
+    <sequenceFlow id="flow16" sourceRef="usertask9" targetRef="parallelgateway3"></sequenceFlow>
+    <sequenceFlow id="flow17" sourceRef="parallelgateway3" targetRef="usertask10"></sequenceFlow>
+    <parallelGateway id="parallelgateway4" name="Parallel Gateway"></parallelGateway>
+    <sequenceFlow id="flow20" sourceRef="usertask10" targetRef="parallelgateway4"></sequenceFlow>
+    <sequenceFlow id="flow21" sourceRef="parallelgateway4" targetRef="usertask11"></sequenceFlow>
+    <boundaryEvent id="boundaryerror1" name="Error" attachedToRef="servicetask1">
+      <errorEventDefinition errorRef="REST_CLIENT_INVOKE_ERROR"></errorEventDefinition>
+    </boundaryEvent>
+    <userTask id="usertask12" name="Error Task" activiti:assignee="admin">
+      <documentation>Salesforce update failed !!!</documentation>
+    </userTask>
+    <sequenceFlow id="flow24" sourceRef="boundaryerror1" targetRef="usertask12"></sequenceFlow>
+    <sequenceFlow id="flow25" sourceRef="usertask12" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow27" sourceRef="parallelgateway2" targetRef="servicetask1"></sequenceFlow>
+    <sequenceFlow id="flow28" sourceRef="parallelgateway3" targetRef="servicetask1"></sequenceFlow>
+    <sequenceFlow id="flow29" sourceRef="parallelgateway4" targetRef="servicetask1"></sequenceFlow>
+    <sequenceFlow id="flow30" sourceRef="usertask11" targetRef="servicetask1"></sequenceFlow>
+    <userTask id="usertask13" name="Closed Task" activiti:assignee="admin">
+      <extensionElements>
+        <activiti:formProperty id="opportunityId" name="Opportunity ID" type="string" default="${opportunityId}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityName" name="Opportunity Name" type="string" default="${opportunityName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityAmount" name="Amount" type="string" default="${opportunityAmount}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="opportunityClosedate" name="Close Date" type="string" default="${opportunityClosedate}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="accountName" name="Account" type="string" default="${accountName}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="type" name="Account Type" type="string" default="${type}" writable="false" required="true"></activiti:formProperty>
+        <activiti:formProperty id="stage" name="Opportunity Stage" type="string" default="${stage}" writable="false" required="true"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow31" sourceRef="exclusivegateway1" targetRef="usertask13">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${stage=="Closed Won" || stage=="Closed Lost"}]]></conditionExpression>
+    </sequenceFlow>
+    <endEvent id="endevent2" name="End"></endEvent>
+    <sequenceFlow id="flow32" sourceRef="usertask13" targetRef="endevent2"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_opportunityProcess">
+    <bpmndi:BPMNPlane bpmnElement="opportunityProcess" id="BPMNPlane_opportunityProcess">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="20.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="110.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="260.0" y="247.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask2" id="BPMNShape_usertask2">
+        <omgdc:Bounds height="55.0" width="105.0" x="370.0" y="30.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask8" id="BPMNShape_usertask8">
+        <omgdc:Bounds height="55.0" width="105.0" x="370.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask9" id="BPMNShape_usertask9">
+        <omgdc:Bounds height="55.0" width="105.0" x="370.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask10" id="BPMNShape_usertask10">
+        <omgdc:Bounds height="55.0" width="105.0" x="380.0" y="350.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask11" id="BPMNShape_usertask11">
+        <omgdc:Bounds height="55.0" width="105.0" x="380.0" y="460.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="BPMNShape_parallelgateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="550.0" y="84.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="650.0" y="40.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="boundaryerror1" id="BPMNShape_boundaryerror1">
+        <omgdc:Bounds height="30.0" width="30.0" x="741.0" y="70.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="550.0" y="184.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="830.0" y="50.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway3" id="BPMNShape_parallelgateway3">
+        <omgdc:Bounds height="40.0" width="40.0" x="550.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway4" id="BPMNShape_parallelgateway4">
+        <omgdc:Bounds height="40.0" width="40.0" x="550.0" y="410.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask12" id="BPMNShape_usertask12">
+        <omgdc:Bounds height="55.0" width="105.0" x="1040.0" y="224.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask13" id="BPMNShape_usertask13">
+        <omgdc:Bounds height="55.0" width="105.0" x="380.0" y="580.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="616.0" y="590.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="55.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="110.0" y="267.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="215.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="260.0" y="267.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="280.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="57.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="57.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="280.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="300.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="267.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="280.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="377.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="377.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="280.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="487.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="487.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="475.0" y="57.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="84.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="550.0" y="104.0"></omgdi:waypoint>
+        <omgdi:waypoint x="422.0" y="130.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="570.0" y="84.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="67.0"></omgdi:waypoint>
+        <omgdi:waypoint x="650.0" y="67.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="755.0" y="67.0"></omgdi:waypoint>
+        <omgdi:waypoint x="830.0" y="67.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="475.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="184.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="570.0" y="224.0"></omgdi:waypoint>
+        <omgdi:waypoint x="422.0" y="240.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="475.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="267.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="290.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
+        <omgdi:waypoint x="570.0" y="330.0"></omgdi:waypoint>
+        <omgdi:waypoint x="432.0" y="350.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
+        <omgdi:waypoint x="485.0" y="377.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="377.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="410.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="550.0" y="430.0"></omgdi:waypoint>
+        <omgdi:waypoint x="432.0" y="460.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
+        <omgdi:waypoint x="771.0" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1020.0" y="104.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1092.0" y="224.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
+        <omgdi:waypoint x="1092.0" y="224.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1092.0" y="67.0"></omgdi:waypoint>
+        <omgdi:waypoint x="865.0" y="67.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27">
+        <omgdi:waypoint x="570.0" y="184.0"></omgdi:waypoint>
+        <omgdi:waypoint x="594.0" y="118.0"></omgdi:waypoint>
+        <omgdi:waypoint x="702.0" y="95.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
+        <omgdi:waypoint x="570.0" y="290.0"></omgdi:waypoint>
+        <omgdi:waypoint x="636.0" y="138.0"></omgdi:waypoint>
+        <omgdi:waypoint x="702.0" y="95.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29">
+        <omgdi:waypoint x="570.0" y="410.0"></omgdi:waypoint>
+        <omgdi:waypoint x="702.0" y="95.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30">
+        <omgdi:waypoint x="485.0" y="487.0"></omgdi:waypoint>
+        <omgdi:waypoint x="702.0" y="487.0"></omgdi:waypoint>
+        <omgdi:waypoint x="702.0" y="95.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31">
+        <omgdi:waypoint x="280.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="280.0" y="607.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="607.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
+        <omgdi:waypoint x="485.0" y="607.0"></omgdi:waypoint>
+        <omgdi:waypoint x="616.0" y="607.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

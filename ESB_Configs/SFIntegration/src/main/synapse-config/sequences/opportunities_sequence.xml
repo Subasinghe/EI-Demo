@@ -8,6 +8,10 @@
     <property expression="//Industry" name="account.industry" scope="default" type="STRING"/>
     <property expression="//NumberOfEmployees" name="account.employees.count" scope="default" type="STRING"/>
     <property expression="//Phone" name="account.phone" scope="default" type="STRING"/>
+    <property expression="//ContactPersonFirstName" name="contact.person.first.name" scope="default" type="STRING"/>
+    <property expression="//ContactPersonLastName" name="contact.person.last.name" scope="default" type="STRING"/>
+    <property expression="//Title" name="contact.person.title" scope="default" type="STRING"/>
+    <property expression="//Email" name="contact.person.email" scope="default" type="STRING"/>
     <property expression="fn:concat(&quot;select Id from Opportunity WHERE Name = &quot;,&quot;'&quot;,get-property('opportunity.name'),&quot;'&quot;)" name="queryString" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
     <salesforce.query configKey="SFConfig">
         <batchSize>200</batchSize>
@@ -40,6 +44,26 @@
                 <queryString xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">{$ctx:queryString}</queryString>
             </salesforce.query>
             <property expression="//ns:records/urn:Id[1]/text()" name="account.id" scope="default" type="STRING" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <payloadFactory description="" media-type="xml">
+                <format>
+                    <sfdc:sobjects type="Contact" xmlns:sfdc="sfdc">
+                        <sfdc:sobject>
+                            <sfdc:FirstName>$ctx:contact.person.first.name</sfdc:FirstName>
+                            <sfdc:LastName>$ctx:contact.person.last.name</sfdc:LastName>
+                            <sfdc:AccountId>$ctx:account.id</sfdc:AccountId>
+                            <sfdc:Title>$ctx:contact.person.title</sfdc:Title>
+                            <sfdc:Email>$ctx:contact.person.email</sfdc:Email>
+                            <sfdc:Phone>$ctx:account.phone</sfdc:Phone>
+                        </sfdc:sobject>
+                    </sfdc:sobjects>
+                </format>
+                <args/>
+            </payloadFactory>
+            <salesforce.create configKey="SFConfig">
+                <allOrNone>0</allOrNone>
+                <allowFieldTruncate>0</allowFieldTruncate>
+                <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
+            </salesforce.create>
             <payloadFactory description="" media-type="xml">
                 <format>
                     <sfdc:sobjects type="Opportunity" xmlns:sfdc="sfdc">

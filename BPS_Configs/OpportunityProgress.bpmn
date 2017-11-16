@@ -62,7 +62,6 @@
         <activiti:formProperty id="opportunityClosedate" name="Close Date" type="string" default="${opportunityClosedate}" writable="false" required="true"></activiti:formProperty>
         <activiti:formProperty id="accountName" name="Account" type="string" default="${accountName}" writable="false" required="true"></activiti:formProperty>
         <activiti:formProperty id="type" name="Account Type" type="string" default="${type}" writable="false" required="true"></activiti:formProperty>
-        <activiti:formProperty id="stage" name="Opportunity Stage" type="string" default="Negotiation/Review" writable="false" required="true"></activiti:formProperty>
         <activiti:formProperty id="stage" name="Opportunity Stage" type="enum" default="${stage}" required="true">
           <activiti:value id="Negotiation/Review" name="Negotiation/Review"></activiti:value>
         </activiti:formProperty>
@@ -111,7 +110,7 @@
         </activiti:field>
         <activiti:field name="input">
           <activiti:expression>{
- "id":"${opportunityId}", "stage":"${stage}"
+ "id":"${opportunityId}", "stage":"${stage}", "opportunityName":"${opportunityName}", "contactName":"${contactName}", "email":"${email}", "accountName":"${accountName}"
 }</activiti:expression>
         </activiti:field>
         <activiti:field name="headers">

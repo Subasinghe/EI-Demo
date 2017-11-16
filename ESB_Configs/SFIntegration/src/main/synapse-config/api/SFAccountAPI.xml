@@ -63,14 +63,6 @@
                             </format>
                             <args/>
                         </payloadFactory>
-                        <payloadFactory description="" media-type="xml">
-                            <format>
-                                <sfdc:sobjects xmlns:sfdc="sfdc">
-                                    <sfdc:Ids>$ctx:salesforce.account.id</sfdc:Ids>
-                                </sfdc:sobjects>
-                            </format>
-                            <args/>
-                        </payloadFactory>
                         <salesforce.delete configKey="SFConfig">
                             <allOrNone>0</allOrNone>
                             <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>

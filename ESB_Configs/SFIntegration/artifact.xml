@@ -5,4 +5,13 @@
     <artifact name="SFConfig" groupId="com.example.SFIntegration.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/local-entries/SFConfig.xml</file>
     </artifact>
+    <artifact name="jms_inbound" groupId="com.example.SFIntegration.inbound-endpoint" version="1.0.0" type="synapse/inbound-endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/inbound-endpoints/jms_inbound.xml</file>
+    </artifact>
+    <artifact name="opportunities_sequence" groupId="com.example.SFIntegration.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/opportunities_sequence.xml</file>
+    </artifact>
+    <artifact name="OpportunityProgressAPI" groupId="com.example.SFIntegration.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/OpportunityProgressAPI.xml</file>
+    </artifact>
 </artifacts>

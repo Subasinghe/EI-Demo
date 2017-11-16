@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/opportunity" name="OpportunityProgressAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" url-mapping="/progress">
+        <inSequence>
+            <property expression="//OpportunityId" name="opportunity.id" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="fn:concat(&quot;select Name,Amount,CloseDate,AccountId,StageName,Type from Opportunity WHERE Id = &quot;,&quot;'&quot;,get-property('opportunity.id'),&quot;'&quot;)" name="queryString" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <salesforce.query configKey="SFConfig">
+                <batchSize>1</batchSize>
+                <queryString xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com">{$ctx:queryString}</queryString>
+            </salesforce.query>
+            <property expression="//ns:records/urn:Name[1]/text()" name="opportunity.name" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="//ns:records/urn:Amount[1]/text()" name="opportunity.amount" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="//ns:records/urn:CloseDate[1]/text()" name="opportunity.closedate" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="//ns:records/urn:AccountId[1]/text()" name="account.id" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="//ns:records/urn:StageName[1]/text()" name="opportunity.stage" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="//ns:records/urn:Type[1]/text()" name="opportunity.type" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="fn:concat('Basic ', base64Encode('admin:admin'))" name="Authorization" scope="transport" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="fn:concat(&quot;select Name from Account WHERE Id = &quot;,&quot;'&quot;,get-property('account.id'),&quot;'&quot;)" name="queryString" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <salesforce.query configKey="SFConfig">
+                <batchSize>1</batchSize>
+                <queryString xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com">{$ctx:queryString}</queryString>
+            </salesforce.query>
+            <property expression="//ns:records/urn:Name[1]/text()" name="account.name" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="fn:concat(&quot;select Name,Email from Contact WHERE AccountId = &quot;,&quot;'&quot;,get-property('account.id'),&quot;'&quot;)" name="queryString" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <salesforce.query configKey="SFConfig">
+                <batchSize>1</batchSize>
+                <queryString xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com">{$ctx:queryString}</queryString>
+            </salesforce.query>
+            <property expression="//ns:records/urn:Name[1]/text()" name="contact.person.name" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="//ns:records/urn:Email[1]/text()" name="contact.person.email" scope="default" type="STRING" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com"/>
+            <property expression="fn:concat('Basic ', base64Encode('admin:admin'))" name="Authorization" scope="transport" type="STRING" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <payloadFactory media-type="json">
+                <format>
+                    {
+   "processDefinitionKey":"opportunityProcess",
+   "tenantId": "-1234",
+   "variables": [
+      {
+        "name":"opportunityId",
+        "value":"$ctx:opportunity.id"
+      },
+      {
+        "name":"opportunityName",
+        "value":"$ctx:opportunity.name"
+      },
+      {
+        "name":"opportunityAmount",
+        "value":"$ctx:opportunity.amount"
+      },
+      {
+        "name":"opportunityClosedate",
+        "value":"$ctx:opportunity.closedate"
+      },
+      {
+        "name":"accountName",
+        "value":"$ctx:account.name"
+      },
+      {
+        "name":"type",
+        "value":"$ctx:opportunity.type"
+      },
+      {
+        "name":"stage",
+        "value":"$ctx:opportunity.stage"
+      },
+      {
+        "name":"contactName",
+        "value":"$ctx:contact.person.name"
+      },
+      {
+        "name":"email",
+        "value":"$ctx:contact.person.email"
+      }
+   ]
+}
+                </format>
+                <args/>
+            </payloadFactory>
+            <send>
+                <endpoint>
+                    <http method="post" uri-template="https://localhost:9445/bpmn/runtime/process-instances/"/>
+                </endpoint>
+            </send>
+        </inSequence>
+        <outSequence>
+            <respond/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST GET" uri-template="/updateStage">
+        <inSequence>
+            <property expression="json-eval($.id)" name="opportunity.id" scope="default" type="STRING"/>
+            <property expression="json-eval($.stage)" name="modified.stage" scope="default" type="STRING"/>
+            <property expression="json-eval($.opportunityName)" name="opportunity.name" scope="default" type="STRING"/>
+            <property expression="json-eval($.accountName)" name="account.name" scope="default" type="STRING"/>
+            <property expression="json-eval($.contactName)" name="contact.name" scope="default" type="STRING"/>
+            <property expression="json-eval($.email)" name="email" scope="default" type="STRING"/>
+            <property expression="fn:concat(&quot; Opportunity &quot;,&quot;'&quot;,get-property('modified.stage'),&quot;'&quot;)" name="subject" scope="default" type="STRING"/>
+            <property expression="fn:concat(&quot; Hello &quot;,get-property('contact.name'),&quot;,&quot;,&quot;The opportunity &quot;,get-property('opportunity.name'),&quot; from your organization &quot;,get-property('account.name'),&quot; is &quot;,get-property('modified.stage'))" name="messageBody" scope="default" type="STRING"/>
+            <filter regex="Closed.*" source="get-property('modified.stage')">
+                <then>
+                    <gmail.init>
+                        <userId>techforce17@gmail.com</userId>
+                        <accessToken>ya29.GlsGBUMPl9FKo7Q2PqreepNRTbRycd3yzI8km--dNApYCji6LAFcxQ3d3wiSrTSoMOK_mUIUuGLV1lHu-pMEbYcgJHvcIguw69w0dmQozN6gttmMKB1vfeHCxkO0</accessToken>
+                        <apiUrl>https://www.googleapis.com/gmail</apiUrl>
+                        <clientId>12025993132-9avdl4h2pdo7dqeumlur56b36er0v445.apps.googleusercontent.com</clientId>
+                        <clientSecret>RaJ8S83fn2N6K8ff9cP4J-9e</clientSecret>
+                        <refreshToken>1/Tqk4jUciX3VYPFuSaWbusAC-2j81_0IW26gBiPFZJyA</refreshToken>
+                    </gmail.init>
+                    <gmail.sendMail>
+                        <to>{$ctx:email}</to>
+                        <subject>{$ctx:subject}</subject>
+                        <messageBody>{$ctx:messageBody}</messageBody>
+                        <contentType>text/html; charset=UTF-8</contentType>
+                    </gmail.sendMail>
+                </then>
+                <else/>
+            </filter>
+            <payloadFactory description="" media-type="xml">
+                <format>
+                    <sfdc:sobjects type="Opportunity" xmlns:sfdc="sfdc">
+                        <sfdc:sobject>
+                            <sfdc:Id>$ctx:opportunity.id</sfdc:Id>
+                            <sfdc:StageName>$ctx:modified.stage</sfdc:StageName>
+                        </sfdc:sobject>
+                    </sfdc:sobjects>
+                </format>
+                <args/>
+            </payloadFactory>
+            <salesforce.update configKey="SFConfig">
+                <allOrNone>0</allOrNone>
+                <allowFieldTruncate>0</allowFieldTruncate>
+                <sobjects xmlns:sfdc="sfdc">{//sfdc:sobjects}</sobjects>
+            </salesforce.update>
+            <property name="messageType" scope="axis2" type="STRING" value="application/json"/>
+            <respond/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+</api>
